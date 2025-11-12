@@ -1,0 +1,21 @@
+# dependências
+node_modules/
+npm-debug.log*
+
+# ambiente
+.env
+.env.*
+
+# SQLite
+api-node/database/*.db
+api-node/database/*.db-journal
+
+# build outputs
+dist/
+build/
+
+# editor/so
+.DS_Store
+Thumbs.db
+*.log
+

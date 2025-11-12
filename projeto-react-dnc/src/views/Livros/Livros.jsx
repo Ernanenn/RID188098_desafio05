@@ -66,8 +66,8 @@ const Livros = () => {
                 <div className='livros__info'>
                   <strong>{livro.titulo}</strong>
                   <span>{`Autor: ${livro.autor}`}</span>
-                  <span>{livro.editora}</span>
-                  <span>{`${livro.num_paginas} páginas`}</span>
+                  <span>{`Número de páginas: ${livro.num_paginas}`}</span>
+                  <span>{`Editora: ${livro.editora}`}</span>
                   <span>{`ISBN: ${livro.isbn}`}</span>
                 </div>
                 <div className='botoes'>

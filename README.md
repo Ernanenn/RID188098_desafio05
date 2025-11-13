@@ -47,7 +47,8 @@ npm install
 npm run dev
 ```
 
-O servidor sobe por padrão em `http://localhost:3000`. Um arquivo `database/library.db` é criado automaticamente caso não exista.
+O servidor sobe por padrão em `http://localhost:3000`. Um arquivo `database/library.db` é criado automaticamente caso não exista.  
+Para produção no Render, defina `SQLITE_DB_PATH=/data/library.db` e anexe um Disk montado em `/data` para persistir os dados.
 
 ### Front-end (React)
 
@@ -61,14 +62,13 @@ O Vite inicia em `http://localhost:5173`. Certifique-se de que a API esteja roda
 
 ### Variáveis de Ambiente
 
-A API aceita opcionalmente:
+| Serviço  | Variável            | Descrição                                               | Valor padrão/local                             |
+|----------|---------------------|---------------------------------------------------------|------------------------------------------------|
+| API      | `PORT`              | Porta HTTP                                              | `3000`                                         |
+| API      | `SQLITE_DB_PATH`    | Caminho do arquivo SQLite                               | `api-node/database/library.db`                 |
+| Frontend | `VITE_API_BASE_URL` | URL base da API consumida pelo React                    | `http://localhost:3000`                        |
 
-| Variável         | Descrição                                 | Valor padrão                       |
-|------------------|-------------------------------------------|------------------------------------|
-| `PORT`           | Porta HTTP da API                         | `3000`                             |
-| `SQLITE_DB_PATH` | Caminho completo para o arquivo SQLite    | `api-node/database/library.db`     |
-
-Crie um arquivo `.env` na pasta `api-node/` se desejar sobrescrever valores.
+Crie um arquivo `.env` na pasta `api-node/` e outro em `projeto-react-dnc/` para sobrescrever valores em ambiente local. Em produção (Netlify/Render) configure as variáveis via painel.
 
 ## Endpoints Principais
 
@@ -95,12 +95,12 @@ Crie um arquivo `.env` na pasta `api-node/` se desejar sobrescrever valores.
 
 ## Fluxo do Front-end
 
-- **Listagem (`/livros`)**: exibe cards com capa, título, autor, editora, ISBN e páginas; permite editar ou excluir.
+- **Listagem (`/livros`)**: exibe cards com capa, título, autor, número de páginas, editora e ISBN; permite editar ou excluir.
 - **Cadastro (`/livros/cadastro`)**: formulário controlado com validação mínima antes do envio.
 - **Edição (`/livros/edicao/:id`)**: carrega dados do livro, permite alterar todos os campos.
 - **Remoção**: confirmação simples antes de chamar a API.
 
-Comunicação via `axios` (`src/api/LivrosService.js`), onde a URL base está configurada para `http://localhost:3000`.
+Comunicação via `axios` (`src/api/LivrosService.js`), lendo a base URL de `VITE_API_BASE_URL` (com fallback para `http://localhost:3000`). Há também o arquivo `public/_redirects` para compatibilidade de rotas no Netlify.
 
 ## Testes Manuais Recomendados
 
